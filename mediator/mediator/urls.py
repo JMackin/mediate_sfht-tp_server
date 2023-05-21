@@ -20,13 +20,16 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('media', views.media_root),
     # TV
-    path('tv/', views.tv_main),
-    path('tv/<str:title>', views.tv_show),
-    path('tv/<str:title>/<int:season>/', views.show_seasons),
-    path('tv/<str:title>/<int:season>/<int:episode>', views.show_seasons),
+    path('media/tv/', views.tv_main),
+    path('media/tv/<str:title>', views.tv_show),
+    path('media/tv/<str:title>/<int:season>/', views.show_seasons),
+    path('media/tv/<str:title>/<int:season>/<int:episode>', views.show_seasons),
     # Books
-    path('books/', views.books_main),
-    path('books<int:topic>/', views.books_by_topic)
+    path('media/books/', views.books_main),
+    path('media/books<int:topic>/', views.books_by_topic),
+    # Misc
+    path('media/misc/', views.misc)
 
 ]

@@ -4,8 +4,30 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 #
-# Models will be references to the actual files on the sftp server and will contain only needed metadata
+# Models will be references to tModelhe actual files on the sftp server and will contain only needed metadata
 #
+
+
+class Media(models.Model):
+    class MediaType(models.TextChoices):
+        BOOKS = 'BK', _('Books')
+        TV = 'TV', _('Television')
+        MISC = 'XX', _('Miscellaneous')
+
+    id = models.CharField(max_length=2, choices=MediaType.choices, default=MediaType.MISC)
+    mType = models.CharField(max_length=15)
+    attribs = models.JSONField()
+    pos_ref = models.FilePathField(path='media')
+
+    def get_mtype(self):
+        return self.mType
+
+    def get_full_mtype(self):
+        return Media.MediaType(self.id)
+
+    def get_dir(self):
+        return self.pos_ref
+
 
 class Book(models.Model):
     class Format(models.TextChoices):
@@ -25,7 +47,7 @@ class Book(models.Model):
     pos_ref = models.FilePathField(path="media/books")
 
     def get_format(self):
-        return self.Format
+        return self.format
 
     def __str__(self):
         return self.title
@@ -49,7 +71,7 @@ class TV(models.Model):
     season = models.CharField(max_length=50)
     # date = models.SmallIntegerField()
     # tags = models.ManyToManyField("Tags", through="Tags", on_delete=models.PROTECT)
-    pos_ref = models.FilePathField(path="media/tv/{}")
+    pos_ref = models.FilePathField(path="media/tv")
 
     def __str__(self):
         return self.title
