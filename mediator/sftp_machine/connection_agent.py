@@ -13,6 +13,13 @@ clientPlc = pthings.Places('client')
 cRoot = clientPlc.target_from_place('ROOT_DIR')
 cDwn_dir = clientPlc.target_from_place('DWNLD_DIR')
 
+# SFTP doer should be called just once at the server startup, and only closed when necessary.
+# Each instantiation creates a new authed transport and channel which adds up quickly.
+# Before cycling the doer, the instance should be deleted with 'del' to ensure the connections are closed.
+
+# TODO: Open new channels for separate users over single transport session
+# From Paramiko - paramiko.transport.Transport:
+#       ** Multiple channels can be multiplexed across a single session **
 
 class SFTPDoer:
 
@@ -112,11 +119,7 @@ class SFTPDoer:
     def get_portal_actor(self):
         return self.portal_action
 
+    def __del__(self):
+        self.get_portal_actor().get_channel().get_transport().close()
 
-
-doer = SFTPDoer()
-
-print(doer.xls_blunt())
-print(doer.xls_attr())
-print(doer.xls())
 

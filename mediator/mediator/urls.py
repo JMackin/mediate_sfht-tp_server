@@ -21,8 +21,8 @@ from .objects import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', views.index),
+    path('media/', views.media_root),
 
-    # path('media/', views.media_root),
     # # TV
     # path('media/tv/', views.tv_main),
     # path('media/tv/<str:title>', views.tv_show),

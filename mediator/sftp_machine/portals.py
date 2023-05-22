@@ -67,9 +67,6 @@ class SftpPortal:
 
             return ssh_client.open_sftp()
 
-    conn_builder = ConnectionBuilder()
-    portal = conn_builder.sftp_portal()
-    channel_id = portal.get_channel()
 
 
     def get_portal(self):
@@ -85,15 +82,15 @@ class SftpPortal:
         return self.portal.get_channel().recv_ready()
 
     def __init__(self):
-        self.portal = self.conn_builder.sftp_portal()
+        self.portal = self.ConnectionBuilder().sftp_portal()
         self.channel_id = self.portal.get_channel().get_id()
 
     def __del__(self):
         if self.portal.get_channel().active:
-            self.portal.close()
+            self.portal.get_channel().get_transport().close()
 
     def __delete__(self, portal):
         if portal.isinstance():
             if self.portal.get_channel().active:
-                self.portal.close()
+                self.portal.get_channel().get_transport().close()
 
