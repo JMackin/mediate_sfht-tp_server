@@ -30,9 +30,16 @@ class SFTPDoer:
     def xcwd(self):
         return self.curr_dir
 
-    def xch_dir(self, path):
-        self.curr_dir = self.portal_action.chdir(path)
-        return self.curr_dir
+    def xch_dir(self, path=None):
+        if path is None:
+            print('No such path. No action performed')
+            return
+        else:
+            print(self.curr_dir)
+            self.portal_action.chdir(os.fspath(path))
+            self.curr_dir = self.portal_action.getcwd()
+            print(f"--> {self.curr_dir}")
+
 
     def xls_iter(self, path=None):
         if path is None:
