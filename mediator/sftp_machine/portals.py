@@ -2,10 +2,10 @@ import os
 import paramiko as pmiko
 from paramiko.ssh_exception import AuthenticationException, SSHException
 
+# Maybe temporary?
 import scrts.secret_things.secretThings as secth
-# import mediator.mediator.objects.models as models
 
-#TODO impliment security measures and hashing for storing keys on server
+# TODO impliment security measures and hashing for storing keys on server
 
 
 # class QueryFiles(models.Media):
@@ -13,6 +13,8 @@ import scrts.secret_things.secretThings as secth
 #     mtype = models.Media.getMType()
 #     dest_path = models.Media.get_dir()
 #
+
+
 
 class SftpPortal:
     class ConnectionBuilder:

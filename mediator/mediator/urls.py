@@ -15,21 +15,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from . import views
+from .objects import views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('media', views.media_root),
-    # TV
-    path('media/tv/', views.tv_main),
-    path('media/tv/<str:title>', views.tv_show),
-    path('media/tv/<str:title>/<int:season>/', views.show_seasons),
-    path('media/tv/<str:title>/<int:season>/<int:episode>', views.show_seasons),
-    # Books
-    path('media/books/', views.books_main),
-    path('media/books<int:topic>/', views.books_by_topic),
-    # Misc
-    path('media/misc/', views.misc)
+    path('home/', views.index),
+
+    # path('media/', views.media_root),
+    # # TV
+    # path('media/tv/', views.tv_main),
+    # path('media/tv/<str:title>', views.tv_show),
+    # path('media/tv/<str:title>/<int:season>/', views.show_seasons),
+    # path('media/tv/<str:title>/<int:season>/<int:episode>', views.show_seasons),
+    # # Books
+    # path('media/books/', views.books_main),
+    # path('media/books<int:topic>/', views.books_by_topic),
+    # # Misc
+    # path('media/misc/', views.misc)
 
 ]
