@@ -21,13 +21,14 @@ cDwn_dir = clientPlc.target_from_place('DWNLD_DIR')
 # From Paramiko - paramiko.transport.Transport:
 #       ** Multiple channels can be multiplexed across a single session **
 
+
 class SFTPDoer:
 
-    def __init__(self):
-        self.sftp_portal = portals.SftpPortal()
-        self.portal_action = self.sftp_portal.get_portal()
+    def __init__(self, transport: portals.SftpPortal):
+        self.sftp_portal = transport.sftp_portal()
+        # self.portal_action = self.sftp_portal.get_portal()
         self.curr_dir = os.fspath(sRoot)
-        self.portal_action.chdir(self.curr_dir)
+        self.sftp_portal.chdir(self.curr_dir)
         self.client_dest_dir = os.fspath(cDwn_dir)
         self.sSlnks = os.fspath(sslnks)
     # TODO: Get starting directory from environ or conf file
@@ -43,8 +44,8 @@ class SFTPDoer:
             return
         else:
             print(self.curr_dir)
-            self.portal_action.chdir(os.fspath(path))
-            self.curr_dir = self.portal_action.getcwd()
+            self.sftp_portal.chdir(os.fspath(path))
+            self.curr_dir = self.sftp_portal.getcwd()
             print(f"--> {self.curr_dir}")
 
 
@@ -54,19 +55,19 @@ class SFTPDoer:
 
         # listdir_iter has parameter 'read-aheads=50'
         # maybe useful for pagination
-        return self.portal_action.listdir_iter(path)
+        return self.sftp_portal.listdir_iter(path)
 
     def xls_attr(self, path=None):
         if path is None:
             path = self.curr_dir
 
-        return self.portal_action.listdir_attr(path)
+        return self.sftp_portal.listdir_attr(path)
 
     def xls(self, path=None):
         if path is None:
             path = self.curr_dir
 
-        for file in self.portal_action.listdir_attr(path):
+        for file in self.sftp_portal.listdir_attr(path):
             if S_ISDIR(file.st_mode):
                 print(f"{file.filename}/")
             else:
@@ -75,7 +76,7 @@ class SFTPDoer:
     def xls_blunt(self, path=None):
         if path is None:
             path = self.curr_dir
-        return self.portal_action.listdir(path)
+        return self.sftp_portal.listdir(path)
 
     # Download target to client download folder
     def xget(self, target, dwnld_path=None):
@@ -85,18 +86,18 @@ class SFTPDoer:
         target_name = target.split('/')[-1]
         dest = f"{dwnld_path}/{target_name}"
 
-        self.portal_action.get(target, localpath=dest)
+        self.sftp_portal.get(target, localpath=dest)
 
     # From Paramiko:
     #       ** Copy a remote file (remotepath) from the SFTP server and write to an open file or file-like object **
     def xget_fopen(self, target, file_obj):
-        self.portal_action.getfo(target, file_obj)
+        self.sftp_portal.getfo(target, file_obj)
         return file_obj
 
     # From Paramiko:
     #       ** Open a file on the remote server. A file-like object is returned. **
     def xfopen(self, target):
-        return self.portal_action.open(target, 'r')
+        return self.sftp_portal.open(target, 'r')
 
     # Make and store a symlink for easy access later, marked w/ given id.
     def xmk_slink(self, target, link_id):
@@ -108,16 +109,16 @@ class SFTPDoer:
             return
 
         if os.path.exists(self.sSlnks):
-            self.portal_action.symlink(target, link_id)
+            self.sftp_portal.symlink(target, link_id)
         else:
-            self.portal_action.mkdir(os.fspath(f"{self.sSlnks}"))
+            self.sftp_portal.mkdir(os.fspath(f"{self.sSlnks}"))
             self.xmk_slink(target, link_id)
 
     def xread_slink(self, link_id):
-        return self.portal_action.readlink(os.fspath(f"{self.sSlnks}/{link_id}"))
+        return self.sftp_portal.readlink(os.fspath(f"{self.sSlnks}/{link_id}"))
 
     def get_portal_actor(self):
-        return self.portal_action
+        return self.sftp_portal
 
     def __del__(self):
         self.get_portal_actor().get_channel().get_transport().close()

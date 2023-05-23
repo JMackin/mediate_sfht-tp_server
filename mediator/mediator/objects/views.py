@@ -8,6 +8,7 @@ from mediator.sftp_machine import connection_agent as conn_agent
 # a new instance of SFTP_Doer. This is horribly inefficient so...
 # TODO: Implement caching or sessions to persist SFTP_Doer instances
 
+
 def index(request):
     return render(request, os.fspath("mediator/objects/templates/index.html"))
 

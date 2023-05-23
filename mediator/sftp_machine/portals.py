@@ -33,7 +33,7 @@ class SftpPortal:
 
             return pk
 
-        def build_ssh_client(self):
+        def build_ssh_transport(self):
 
             sftp_key = self.get_sftp_key()
             username = self.secret.get_username('sftp-user')
@@ -61,36 +61,33 @@ class SftpPortal:
 
             return ssh_conn
 
-        def sftp_portal(self):
+    def sftp_portal(self):
+        new_client = self.ssh_transport.open_sftp()
+        return new_client
 
-            ssh_client = self.build_ssh_client()
-
-            return ssh_client.open_sftp()
-
-
-
-    def get_portal(self):
-        return self.portal
+    def get_transport(self):
+        return self.ssh_transport
 
     def get_chanId(self):
-        return self.channel_id
+        pass
+        # return self.channel_id
 
-    def is_open(self):
-        return self.portal.get_channel().active
+    def is_open(self, portal):
+        return portal.get_channel().is_active()
 
-    def ready_to_read(self):
-        return self.portal.get_channel().recv_ready()
+    def ready_to_read(self, portal):
+        return portal.get_channel().recv_ready()
 
     def __init__(self):
-        self.portal = self.ConnectionBuilder().sftp_portal()
-        self.channel_id = self.portal.get_channel().get_id()
+        self.ssh_transport = self.ConnectionBuilder().build_ssh_transport()
+        # self.channel_id = get_channel().get_id()
 
     def __del__(self):
-        if self.portal.get_channel().active:
-            self.portal.get_channel().get_transport().close()
+        if self.ssh_transport.get_transport().active:
+            self.ssh_transport.close()
 
     def __delete__(self, portal):
         if portal.isinstance():
-            if self.portal.get_channel().active:
-                self.portal.get_channel().get_transport().close()
+            if self.ssh_transport.get_transport().active:
+                self.ssh_transport.close()
 
