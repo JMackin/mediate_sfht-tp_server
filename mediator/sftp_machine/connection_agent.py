@@ -1,9 +1,9 @@
 import mediator.sftp_machine.portals as portals
 import os.path
-from stat import S_ISDIR, S_ISREG
+from stat import S_ISDIR
 
 # Maybe temporary?
-import places.place_things.placethings as pthings
+import place_things.placethings as pthings
 
 serverPlc = pthings.Places('server')
 sRoot = serverPlc.target_from_place('ROOT_DIR')
@@ -13,9 +13,6 @@ clientPlc = pthings.Places('client')
 cRoot = clientPlc.target_from_place('ROOT_DIR')
 cDwn_dir = clientPlc.target_from_place('DWNLD_DIR')
 
-# SFTP doer should be called just once at the server startup, and only closed when necessary.
-# Each instantiation creates a new authed transport and channel which adds up quickly.
-# Before cycling the doer, the instance should be deleted with 'del' to ensure the connections are closed.
 
 # TODO: Open new channels for separate users over single transport session
 # From Paramiko - paramiko.transport.Transport:
@@ -121,6 +118,6 @@ class SFTPDoer:
         return self.sftp_portal
 
     def __del__(self):
-        self.get_portal_actor().get_channel().get_transport().close()
+        self.get_portal_actor().get_channel().close()
 
 

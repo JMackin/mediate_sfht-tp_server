@@ -1,6 +1,6 @@
 import os
 import paramiko as pmiko
-from paramiko.ssh_exception import AuthenticationException, SSHException
+from paramiko.ssh_exception import SSHException
 
 # Maybe temporary?
 import scrts.secret_things.secretThings as secth
@@ -14,8 +14,9 @@ import scrts.secret_things.secretThings as secth
 #     dest_path = models.Media.get_dir()
 #
 
-
-
+#Sftp portal should be called just once at the server startup, and only closed when necessary.
+# Each instantiation creates a new authed transport session which adds up quickly.
+# Before cycling the session, the instance should be deleted with 'del' to ensure the connections are closed.
 class SftpPortal:
     class ConnectionBuilder:
 

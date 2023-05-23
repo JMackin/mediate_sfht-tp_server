@@ -14,4 +14,3 @@ def index(request):
 
 
 def media_root(request):
-    pass

@@ -1,6 +1,7 @@
 import os.path
 import json
 
+
 class Secrets:
 
     def __init__(self, mappings='scrts/mappings'):
@@ -63,7 +64,6 @@ class Secrets:
 
     def get_host_ip(self, hostid):
         return self.get_host(hostid)[0].split(':')[1].strip()
-
 
     def get_host_port(self, hostid):
         return self.get_host(hostid)[1].split(':')[1].strip()
