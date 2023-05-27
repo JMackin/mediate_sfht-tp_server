@@ -8,7 +8,7 @@ class WsgiConnector(object):
         yield "Hello World!\n"
 
 
-app = mediator.mediator.wsgi
+app = mediator
 
 
 # ***

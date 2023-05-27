@@ -20,3 +20,15 @@ Hypothetical structure:
                        ===>  { server } 
 
 ```
+
+Dealing with env variables:
+    To make work:
+
+    - cd mediate_htt-sftp/mediator/
+    - export SCRTS_MAPPINGS="scrts/mappings"
+    - export PLCS_MAPPINGS="places/mappings"
+    - export DJANGO_SETTINGS_MODULE=mysite.settings
+
+running Gunicorn
+    
+    - gunicorn mediator_wsgi.wsgi_connector:WsgiConnector
