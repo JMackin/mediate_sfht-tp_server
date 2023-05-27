@@ -1,17 +1,18 @@
-import mediator.sftp_machine.portals as portals
 import os.path
 from stat import S_ISDIR
 
 # Maybe temporary?
-import place_things.placethings as pthings
+import places.place_things.placeThings as pthings
+from . import portals as portals
 
-serverPlc = pthings.Places('server')
-sRoot = serverPlc.target_from_place('ROOT_DIR')
-sslnks = serverPlc.target_from_place('SLINKS')
+plc = pthings.Places()
+serverPlc = plc.get_place_loc('server')
+sRoot = plc.get_target_fromPlace('ROOT_DIR', 'server')
+sslnks = plc.get_target_fromPlace('SLINKS', 'server')
 
-clientPlc = pthings.Places('client')
-cRoot = clientPlc.target_from_place('ROOT_DIR')
-cDwn_dir = clientPlc.target_from_place('DWNLD_DIR')
+clientPlc = plc.get_place_loc('client')
+cRoot = plc.get_target_fromPlace('ROOT_DIR', 'client')
+cDwn_dir = plc.get_target_fromPlace('DWNLD_DIR', 'client')
 
 
 # TODO: Open new channels for separate users over single transport session

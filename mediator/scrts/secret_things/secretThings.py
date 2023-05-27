@@ -1,10 +1,12 @@
-import os.path
 import json
-
+import os
 
 class Secrets:
 
-    def __init__(self, mappings='scrts/mappings'):
+    def __init__(self):
+
+        self.scrts_mappings = str(os.getenv('SCRTS_MAPPINGS'))
+
         def mk_empty_mappings():
             empty_maps = {
                 'key_loc:': {},
@@ -12,17 +14,17 @@ class Secrets:
                 'users': {},
                 'hosts': {}
             }
-            with open('scrts/mappings', 'w') as mps:
+            with open(self.scrts_mappings, 'w') as mps:
                 json.dump(empty_maps, mps)
 
             print('\nMappings file not found.'
                   '\nPlease make required entries in "scrts/mappings" before using this class')
             quit()
 
-        if not os.path.exists(mappings):
+        if not os.path.exists(self.scrts_mappings):
             mk_empty_mappings()
         else:
-            with open(mappings, 'r') as mps:
+            with open(self.scrts_mappings, 'r') as mps:
                 mps_decoded = json.load(mps)
                 self.key_loc = mps_decoded.get('key_loc')
                 self.key_pwd = mps_decoded.get('key_pwd')
@@ -30,6 +32,8 @@ class Secrets:
                 self.hosts = mps_decoded.get('hosts')
 
     def get_keyloc(self, keyid):
+        print(keyid)
+        print(self.key_loc.__str__)
         return self.key_loc.get(keyid)
 
     def get_keyid_list(self):

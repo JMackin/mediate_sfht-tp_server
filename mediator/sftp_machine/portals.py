@@ -1,11 +1,15 @@
 import os
-import paramiko as pmiko
-from paramiko.ssh_exception import SSHException
 
+import paramiko as pmiko
 # Maybe temporary?
 import scrts.secret_things.secretThings as secth
+from paramiko.ssh_exception import SSHException
 
-# TODO impliment security measures and hashing for storing keys on server
+
+# from paramiko.ssh_exception import SSHException
+
+
+# TODO implement security measures and hashing for storing keys on server
 
 
 # class QueryFiles(models.Media):

@@ -3,6 +3,7 @@ import uuid
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+
 #
 # Models will be references to tModelhe actual files on the sftp server and will contain only needed metadata
 #
@@ -14,7 +15,7 @@ class Media(models.Model):
         TV = 'TV', _('Television')
         MISC = 'XX', _('Miscellaneous')
 
-    id = models.CharField(max_length=2, choices=MediaType.choices, default=MediaType.MISC)
+    id = models.CharField(max_length=2, choices=MediaType.choices, default=MediaType.MISC, primary_key=True)
     mType = models.CharField(max_length=15)
     attribs = models.JSONField()
     pos_ref = models.FilePathField(path='media')
@@ -39,7 +40,6 @@ class Book(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=50)
-    topic = models.ManyToManyField("Topics", through="Topics", on_delete=models.PROTECT())
     format = models.CharField(max_length=4, choices=Format.choices, default=Format.PDF)
     favorite = models.BooleanField(default=False)
     # date = models.SmallIntegerField()
@@ -53,20 +53,21 @@ class Book(models.Model):
         return self.title
 
 
-class Topics(models.Model):
-    topicId = models.SmallIntegerField(primary_key=True)
-    topicName = models.CharField(max_length=20)
-    topicPath = models.FilePathField(path="media/books/topics")
-
-
-    def __str__(self):
-        return self.topicName
-
+# class Topics(models.Model):
+#     topicId = models.SmallIntegerField(primary_key=True)
+#     topicName = models.CharField(max_length=20)
+#     topicPath = models.FilePathField(path="media/books/topics")
+#     books = models.ForeignKey(Book, on_delete=models.DO_NOTHING)
+#
+#
+#     def __str__(self):
+#         return self.topicName
+#
 
 
 class TV(models.Model):
 
-    id = models.UUIDField()
+    id = models.UUIDField(primary_key=True)
     title = models.CharField(max_length=200)
     season = models.CharField(max_length=50)
     # date = models.SmallIntegerField()

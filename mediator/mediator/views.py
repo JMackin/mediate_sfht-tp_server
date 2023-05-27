@@ -1,7 +1,7 @@
 import os
+
 from django.shortcuts import render
 
-from mediator.sftp_machine import connection_agent as conn_agent
 
 # Most (maybe all) of the views will involve interaction with SFTP_machine, which instantiates an
 # object to make connections and send SFTP commands. As of now every request will create and destroy
@@ -14,3 +14,4 @@ def index(request):
 
 
 def media_root(request):
+    pass
