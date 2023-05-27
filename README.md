@@ -11,7 +11,7 @@ Hypothetical structure:
                                                                /
                                   [      - docker -     ]     /                       
                                   | [[gunicorn (wsgi)]] | <--    
-                                  | | [[drupal (py)]] | |
+                                  | | [[django (py)]] | |
        [   - docker -   ]                        /           
        |  [[ssh_tunn]]  |  <--paramiko (SFTP) --
        |       \\       |
