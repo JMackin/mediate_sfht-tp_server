@@ -8,7 +8,7 @@ class Places:
 
     def __init__(self):
 
-        self.plcs_mappings = str(os.getenv('PLCS_MAPPINGS'))
+        self.plcs_mappings = './places/place_things/mappings'
         print(self.plcs_mappings)
         def mk_empty_mappings():
             empty_maps = {

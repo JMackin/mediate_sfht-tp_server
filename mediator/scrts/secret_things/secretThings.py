@@ -5,7 +5,7 @@ class Secrets:
 
     def __init__(self):
 
-        self.scrts_mappings = str(os.getenv('SCRTS_MAPPINGS'))
+        self.scrts_mappings = str(os.getenv('./scrts/secret_things/mappings'))
 
         def mk_empty_mappings():
             empty_maps = {

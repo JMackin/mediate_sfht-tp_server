@@ -1,14 +1,14 @@
 import mediator
 
 
-class WsgiConnector(object):
+class WsgiConnector:
 
     def __call__(self, environ, start_fn):
         start_fn('200 OK', [('Content-Type', 'text/plain')])
         yield "Hello World!\n"
 
 
-app = mediator
+app = mediator.wsgi
 
 
 # ***

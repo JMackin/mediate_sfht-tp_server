@@ -1,6 +1,7 @@
 import os
 
 from django.shortcuts import render
+from sftp_machine import connection_agent as sftpDoer
 
 
 # Most (maybe all) of the views will involve interaction with SFTP_machine, which instantiates an
@@ -10,8 +11,9 @@ from django.shortcuts import render
 
 
 def index(request):
-    return render(request, os.fspath("mediator/objects/templates/index.html"))
+
+    return render(request, os.fspath("objects/templates/index.html"))
 
 
-def media_root(request):
-    pass
+def books_indx(request):
+    return render(request, os.fspath("objects/books.html"))

@@ -20,8 +20,8 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/', views.index),
-    path('media/', views.media_root),
+    path('home/', views.index, name="index"),
+    path('home/books/', views.books_indx, name="books")
 
     # # TV
     # path('media/tv/', views.tv_main),
@@ -33,5 +33,4 @@ urlpatterns = [
     # path('media/books<int:topic>/', views.books_by_topic),
     # # Misc
     # path('media/misc/', views.misc)
-
 ]

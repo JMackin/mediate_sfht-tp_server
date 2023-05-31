@@ -25,8 +25,7 @@ Dealing with env variables:
 
     - cd mediate_http-sftp/mediator/
 
-    - export SCRTS_MAPPINGS="scrts/mappings"
-    - export PLCS_MAPPINGS="places/mappings"
+
     - export DJANGO_SETTINGS_MODULE=mediator.settings
 
 Running Gunicorn:

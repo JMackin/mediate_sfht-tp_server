@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 #
-# Models will be references to tModelhe actual files on the sftp server and will contain only needed metadata
+# Models will be references to the actual files on the sftp server and will contain only needed metadata
 #
 
 
