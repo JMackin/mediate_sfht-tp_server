@@ -1,3 +1,9 @@
+<b>NOTICE 06-04-2023:</b>
+
+The project grew too over engineered and so I'm starting from scratch. Expect no more development on this repo, but a new iteration is forthcoming
+
+----
+
 A django server for connecting a web interface (nginx) with an sftp server(OpenSSH).
 Intended to be deployed in a docker container.
 
